@@ -1,4 +1,3 @@
-// Importing necessary modules and packages
 const express = require("express");
 const app = express();
 const userRoutes = require("./routes/user");
@@ -13,7 +12,6 @@ const { cloudinaryConnect } = require("./config/cloudinary");
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 
-
 // Setting up port number
 const PORT = process.env.PORT || 4000;
 
@@ -26,15 +24,19 @@ database.connect();
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
-
-
+app.use(
+	cors({
+		origin: "*",
+		credentials: true,
+	})
+);
 app.use(
 	fileUpload({
 		useTempFiles: true,
 		tempFileDir: "/tmp/",
 	})
 );
-app.use(cors({ origin: 'http://localhost:3000' }));
+
 // Connecting to cloudinary
 cloudinaryConnect();
 
